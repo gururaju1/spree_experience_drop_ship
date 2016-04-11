@@ -1,0 +1,24 @@
+<% content_for :page_actions do %>
+  <%= button_link_to Spree.t(:back_to_shipments_list), spree.admin_shipments_path, icon: 'arrow-left' %>
+<% end %>
+
+<% if spree_current_user.admin? && @shipment.experience.present? %>
+  <div data-hook="admin_shipment_experience" class="row">
+    <fieldset class="col-md-12 no-border-bottom">
+      <legend align="center"><%= Spree.t(:experience_information) %></legend>
+      <div>
+        <b><%= Spree::Experience.human_attribute_name(:name) %>:</b> <%= @shipment.experience.name %><br/>
+        <b><%= Spree::Experience.human_attribute_name(:email) %>:</b> <%= @shipment.experience.email %><br/>
+        <b><%= Spree::Experience.human_attribute_name(:url) %>:</b> <%= link_to @shipment.experience.url, @shipment.experience.url if @shipment.experience.url.present? %><br/>
+      </div>
+      <div>
+        <b><%= Spree.t('contact_information') %>:</b>
+      </div>
+      <%= render partial: 'spree/shared/address', locals: { address: @shipment.experience.address } %>
+    </fieldset>
+  </div>
+<% end %>
+
+<div data-hook="admin_shipment_form_fields">
+  <%= render partial: "spree/admin/orders/shipment", locals: { order: @shipment.order, shipment: @shipment } %>
+</div>

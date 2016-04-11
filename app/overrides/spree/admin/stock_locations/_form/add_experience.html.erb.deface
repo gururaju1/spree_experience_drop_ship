@@ -1,0 +1,12 @@
+<!-- insert_bottom "[data-hook=admin_stock_locations_form_fields]" -->
+
+<%# Remove extra div and change classes %>
+<% if spree_current_user.admin? %>
+    <div class='form-group'>
+      <%= f.field_container :experience do %>
+        <%= f.label :experience_id, Spree.t(:experience) %>
+        <%= f.collection_select(:experience_id, Spree::Experience.all, :id, :name, { :include_blank => 'None' }, { :class => 'select2' }) %>
+        <%= f.error_message_on :experience %>
+      <% end %>
+    </div>
+<% end %>
