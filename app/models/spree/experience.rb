@@ -1,4 +1,4 @@
-class Spree::Artist < Spree::Base
+class Spree::Experience < Spree::Base
   extend FriendlyId
   friendly_id :name, use: :slugged
 
@@ -17,9 +17,9 @@ class Spree::Artist < Spree::Base
   has_many   :products, through: :variants
   has_many   :shipments, through: :stock_locations
   has_many   :stock_locations
-  has_many   :artist_variants
+  has_many   :experience_variants
   has_many   :users, class_name: Spree.user_class.to_s
-  has_many   :variants, through: :artist_variants
+  has_many   :variants, through: :experience_variants
 
   #==========================================
   # Validations
@@ -35,7 +35,7 @@ class Spree::Artist < Spree::Base
 
   after_create :assign_user
   after_create :create_stock_location
-  after_create :send_welcome, if: -> { SpreeArtistDropShip::Config[:send_artist_email] }
+  after_create :send_welcome, if: -> { SpreeExperienceDropShip::Config[:send_experience_email] }
   before_create :set_commission
   before_validation :check_url
 
@@ -96,7 +96,7 @@ class Spree::Artist < Spree::Base
 
     def send_welcome
       begin
-        Spree::ArtistMailer.welcome(self.id).deliver_later!
+        Spree::experienceMailer.welcome(self.id).deliver_later!
         # Specs raise error for not being able to set default_url_options[:host]
       rescue => ex #Errno::ECONNREFUSED => ex
         Rails.logger.error ex.message
@@ -107,10 +107,10 @@ class Spree::Artist < Spree::Base
 
     def set_commission
       unless changes.has_key?(:commission_flat_rate)
-        self.commission_flat_rate = SpreeArtistDropShip::Config[:default_commission_flat_rate]
+        self.commission_flat_rate = SpreeExperienceDropShip::Config[:default_commission_flat_rate]
       end
       unless changes.has_key?(:commission_percentage)
-        self.commission_percentage = SpreeArtistDropShip::Config[:default_commission_percentage]
+        self.commission_percentage = SpreeExperienceDropShip::Config[:default_commission_percentage]
       end
     end
 

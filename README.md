@@ -1,4 +1,4 @@
-SpreeArtistDropShip
+SpreeExperienceDropShip
 ===================
 
 Introduction goes here.
