@@ -10,6 +10,8 @@ class CreateSpreeExperienceVariants < ActiveRecord::Migration
     Spree::Product.where.not(experience_id: nil).each do |product|
       product.add_experience! product.experience_id
     end
-    remove_column :spree_products, :experience_id
   end
 end
+
+
+
