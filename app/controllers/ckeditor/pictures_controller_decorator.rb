@@ -14,4 +14,4 @@ if defined?(Ckeditor::PicturesController)
       end
     end
   end
-endsss
+end
